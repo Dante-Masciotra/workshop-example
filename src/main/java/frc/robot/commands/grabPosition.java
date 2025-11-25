@@ -42,11 +42,18 @@ public class grabPosition extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+    if(m_Wrist.getPosition() == 100 || m_Gripper.getPosition() == -100){
+      return true;
+    }
+    
     return false;
   }
 }
