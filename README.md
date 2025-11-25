@@ -12,8 +12,7 @@ An example of subsystem and commands for a robotic arm
 - Wrist
 - Gripper
 
+## Commands
 
-  ## Commands
-
-  - Pick Up Position
+- Pick Up Position
     
