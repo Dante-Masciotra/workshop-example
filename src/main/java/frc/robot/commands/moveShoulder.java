@@ -5,56 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.elbow;
-import frc.robot.subsystems.gripper;
 import frc.robot.subsystems.shoulder;
-import frc.robot.subsystems.wrist;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class grabPosition extends Command {
-  private final elbow m_Elbow;  
-  private final wrist m_Wrist;  
-  private final shoulder m_Shoulder;  
-  private final gripper m_Gripper;  
-  /** Creates a new grabPosition. */
-  public grabPosition(elbow elbow, shoulder shoulder, gripper gripper, wrist wrist) {
-    this.m_Elbow = elbow;
-    this.m_Wrist = wrist;
+public class moveShoulder extends Command {
+    private final shoulder m_Shoulder;
+    private final double speed;  
+
+  /** Creates a new moveShoulder. */
+  public moveShoulder(shoulder shoulder, double speed) {
     this.m_Shoulder = shoulder;
-    this.m_Gripper = gripper;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(elbow,shoulder,gripper,wrist);
+    addRequirements(shoulder);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    this.m_Elbow.setTargetAngle(45);
-    this.m_Shoulder.setTargetAngle(0);
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.m_Wrist.setPower(0.5);
-    this.m_Gripper.setPower(-0.5);
+    this.m_Shoulder.setPower(this.speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.m_Gripper.stop();
-    this.m_Wrist.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-
-    if(this.m_Wrist.getPosition() == 100 || this.m_Gripper.getPosition() == -100){
-      return true;
-    }
-
     return false;
   }
 }
